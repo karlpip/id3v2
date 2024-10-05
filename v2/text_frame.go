@@ -11,6 +11,7 @@ import "io"
 type TextFrame struct {
 	Encoding Encoding
 	Text     string
+	RawText  []byte
 }
 
 func (tf TextFrame) Size() int {
@@ -48,6 +49,7 @@ func parseTextFrame(br *bufReader) (Framer, error) {
 	tf := TextFrame{
 		Encoding: encoding,
 		Text:     decodeText(buf.Bytes(), encoding),
+		RawText:  buf.Bytes(),
 	}
 
 	return tf, nil

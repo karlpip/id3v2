@@ -1,6 +1,8 @@
 package id3v2
 
-import "io"
+import (
+	"io"
+)
 
 // UserDefinedTextFrame is used to work with TXXX frames.
 // There can be many UserDefinedTextFrames but the Description fields need to be unique.
@@ -8,6 +10,7 @@ type UserDefinedTextFrame struct {
 	Encoding    Encoding
 	Description string
 	Value       string
+	RawValue    []byte
 }
 
 func (udtf UserDefinedTextFrame) Size() int {
@@ -42,10 +45,15 @@ func parseUserDefinedTextFrame(br *bufReader, version byte) (Framer, error) {
 		return nil, err
 	}
 
+	raw := value.Bytes()
+	c := make([]byte, len(raw))
+	copy(c, raw)
+
 	udtf := UserDefinedTextFrame{
 		Encoding:    encoding,
 		Description: decodeText(description, encoding),
-		Value:       decodeText(value.Bytes(), encoding),
+		Value:       decodeText(raw, encoding),
+		RawValue:    c,
 	}
 
 	return udtf, nil
