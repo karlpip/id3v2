@@ -131,7 +131,6 @@ func decodeMulti(src []byte, from Encoding) []string {
 		res = append(res, decodeText(s, from))
 	}
 	return res
-
 }
 
 // encodeWriteText encodes src from UTF-8 to "to" encoding and writes to bw.

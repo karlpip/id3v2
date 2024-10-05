@@ -71,7 +71,6 @@ func testMultiTextFrames(t *testing.T, tag *Tag) {
 	if err := compareTwoStrings(artistFrame.Multi[1], "artist2"); err != nil {
 		t.Error(err)
 	}
-
 }
 
 func testTextFrames(t *testing.T, tag *Tag) {
